@@ -29,7 +29,10 @@ if (items === null || Object.entries(items).length === 0) {
   localStorage.setItem('listItem', JSON.stringify(items));
   chores = JSON.parse(localStorage.getItem('listItem'));
   items.forEach(item => {
-    list.innerHTML += `<div class="list__card"><li class="card__item">${item}</li><button class="btn btn-delete">Delete</button></div>`;
+    list.innerHTML += `<div class="list__card">
+    <li class="card__item">${item}</li>
+    <button class="btn btn-delete">Delete</button>
+    </div>`;
   });
 
   // Add functionality to the generated delete buttons (functions.js)
@@ -46,7 +49,11 @@ inputForm.addEventListener('submit', function(event) {
     userPrompt.innerHTML = '';
     localStorage.setItem('listItem', JSON.stringify(chores));
     const items = JSON.parse(localStorage.getItem('listItem'));
-    list.innerHTML += `<div class="list__card"><li class="card__item">${items.pop()}</li><button class="btn btn-delete">Delete</button></div>`;
+
+    list.innerHTML += `<div class="list__card">
+    <li class="card__item">${items.pop()}</li>
+    <button class="btn btn-delete">Delete</button>
+    </div>`;
 
     // Add functionality to the generated delete buttons (functions.js)
     deleteButtonHandler();
