@@ -1,0 +1,17 @@
+.list {
+  padding: 0;
+}
+.list__card {
+  padding: 10px;
+  border: 1px solid black;
+  margin: 2px;
+}
+.card__item {
+  list-style: none;
+}
+.btn {
+  border: 1px solid black;
+}
+.btn-delete {
+  background: red;
+}
