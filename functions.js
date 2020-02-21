@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Adds functionality to the delete buttons.
  * Selects all deletebuttons and gets parent div for each button
@@ -17,5 +18,13 @@ function deleteButtonHandler() {
       chores.splice(cardItemIndex, 1);
       localStorage.setItem('listItem', JSON.stringify(chores));
     });
+  });
+}
+
+function editButtonHandler() {
+  const editButtons = document.querySelectorAll('.btn-edit');
+
+  editButtons.forEach(editButton => {
+    editButton.addEventListener('click', e => {});
   });
 }
