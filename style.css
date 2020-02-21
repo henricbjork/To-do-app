@@ -1,17 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+main {
+  margin: 0 auto;
+}
+.header__text {
+  text-align: center;
+  padding: 10px;
+}
+.input_form {
+  display: flex;
+  justify-content: center;
+}
+.user_prompt {
+  text-align: center;
+}
 .list {
   padding: 0;
 }
 .list__card {
   padding: 10px;
   border: 1px solid black;
+  border-radius: 3px;
   margin: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .card__item {
   list-style: none;
 }
 .btn {
   border: 1px solid black;
+  padding: 5px;
+  border-radius: 3px;
+  background: #fff;
 }
 .btn-delete {
   background: red;
+}
+.done {
+  background: green;
 }
