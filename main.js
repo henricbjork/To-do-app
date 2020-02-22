@@ -6,7 +6,7 @@ const template = `
 </div>
     <form class="input_form">
     <label for="input_form__input">Input todo</label>
-        <input type="text "name="input_form__input" id="input_form__input" class="input_form__input"  required>
+        <input type="text "name="input_form__input" id="input_form__input" class="input input_form__input"  required>
         <button type="submit" class="btn input_form__button">Submit</button>
     </form>
     <p class="user_prompt"></p>
@@ -25,6 +25,7 @@ const listCards = document.querySelectorAll('.list__card');
 const items = JSON.parse(localStorage.getItem('listItem'));
 
 let chores = [];
+let comparer = [];
 
 if (items === null || Object.entries(items).length === 0) {
   userPrompt.innerHTML = 'Add your first chore!';
