@@ -41,9 +41,9 @@ function editButtonHandler() {
       const card = editButton.closest('.list__card');
       const cardItem = card.childNodes[1];
       const cardItemText = cardItem.innerText;
-      console.log(cardItemText);
+
       comparer.push(cardItemText);
-      console.log(comparer);
+
       localStorage.setItem('comparerItem', JSON.stringify(comparer));
       comparer = JSON.parse(localStorage.getItem('comparerItem'));
       const comparerItem = comparer[0];
