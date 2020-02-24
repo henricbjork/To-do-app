@@ -11,7 +11,8 @@ function getStoredItems(item) {
   return items;
 }
 
-function deleteStoredItem(array, index, item) {
+function deleteStoredItem(array, text, item) {
+  const index = array.indexOf(text);
   array.splice(index, 1);
   localStorage.setItem(item, JSON.stringify(array));
 }
@@ -19,36 +20,10 @@ function deleteStoredItem(array, index, item) {
 function deleteElement(element) {
   element.remove();
 }
-/**
- * Adds functionality to the delete buttons.
- * Selects all deletebuttons and gets parent div for each button
- * Then gets the index of the card item in each div
- * then removes the div and removes the item from the chores array based on the fetched index
- * then sets the new modified array to the local storage.
- *
- */
-function deleteButtonHandler() {
-  const deleteButtons = document.querySelectorAll('.btn-delete');
-  const deleteFinishedButtons = document.querySelectorAll(
-    '.btn-delete_finished'
-  );
-  deleteCard(deleteButtons, chores, 'listItem');
 
-
-  deleteCard(deleteFinishedButtons, finished, 'finishedItem');
-}
-
-function deleteCard(buttons, array, item) {
-  buttons.forEach(button => {
-    button.addEventListener('click', e => {
-      const card = button.closest('.list__card');
-      const cardItemIndex = array.indexOf(
-        card.childNodes[1].childNodes[3].innerText
-      );
-      deleteElement(card);
-      deleteStoredItem(array, cardItemIndex, item);
-    });
-  });
+function deleteCard(text, array, item) {
+  const cardItemIndex = array.indexOf(text);
+  deleteStoredItem(array, cardItemIndex, item);
 }
 
 function editButtonHandler() {
@@ -153,12 +128,17 @@ function doneButtonHandler() {
       </div>
       </div>`;
 
-      deleteButtonHandler();
+      const deleteButtons = document.querySelectorAll('.btn-delete_finished');
+
+      deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', e => {
+          const card = deleteButton.closest('.list__card');
+          const cardText = card.childNodes[1].childNodes[3].innerText;
+
+          deleteElement(card);
+          deleteStoredItem(finished, cardText, 'finishedItem');
+        });
+      });
     });
   });
-}
-
-function regretButtonHandler() {
-  const regretButtons = document.querySelectorAll('.btn-regret');
-  deleteFinishedCard(regretButtons);
 }

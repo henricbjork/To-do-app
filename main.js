@@ -32,6 +32,7 @@ const finishedList = document.querySelector('.finished_list');
 const items = JSON.parse(localStorage.getItem('listItem'));
 const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
 const finishedPrompt = document.querySelector('.finished_prompt');
+let deleteButtons;
 
 let chores = [];
 let comparer = [];
@@ -55,10 +56,20 @@ if (items === null || Object.entries(items).length === 0) {
     </div>`;
   });
 
-  // Add functionality to the generated delete buttons (functions.js)
-  deleteButtonHandler();
-  editButtonHandler();
+  const deleteButtons = document.querySelectorAll('.btn-delete');
+
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener('click', e => {
+      const card = deleteButton.closest('.list__card');
+      const cardText = card.childNodes[1].childNodes[3].innerText;
+
+      deleteElement(card);
+      deleteStoredItem(chores, cardText, 'listItem');
+    });
+  });
+
   doneButtonHandler();
+  editButtonHandler();
 }
 
 if (finishedItems === null || Object.entries(finishedItems).length === 0) {
@@ -78,8 +89,17 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
     </div>`;
   });
 
-  deleteButtonHandler();
-  regretButtonHandler();
+  const deleteButtons = document.querySelectorAll('.btn-delete_finished');
+
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener('click', e => {
+      const card = deleteButton.closest('.list__card');
+      const cardText = card.childNodes[1].childNodes[3].innerText;
+
+      deleteElement(card);
+      deleteStoredItem(finished, cardText, 'finishedItem');
+    });
+  });
 }
 
 inputForm.addEventListener('submit', function(event) {
@@ -101,8 +121,18 @@ inputForm.addEventListener('submit', function(event) {
     </div>
     </div>`;
 
-    // Add functionality to the generated delete buttons (functions.js)
-    deleteButtonHandler();
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+
+    deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener('click', e => {
+        const card = deleteButton.closest('.list__card');
+        const cardText = card.childNodes[1].childNodes[3].innerText;
+
+        deleteElement(card);
+        deleteStoredItem(chores, cardText, 'listItem');
+      });
+    });
+
     editButtonHandler();
     doneButtonHandler();
   }
