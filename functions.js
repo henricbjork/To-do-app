@@ -10,9 +10,14 @@ function getStoredItems(item) {
   const items = JSON.parse(localStorage.getItem(item));
   return items;
 }
+
 function deleteStoredItem(array, index, item) {
   array.splice(index, 1);
   localStorage.setItem(item, JSON.stringify(array));
+}
+
+function deleteElement(element) {
+  element.remove();
 }
 /**
  * Adds functionality to the delete buttons.
@@ -27,35 +32,21 @@ function deleteButtonHandler() {
   const deleteFinishedButtons = document.querySelectorAll(
     '.btn-delete_finished'
   );
+  deleteCard(deleteButtons, chores, 'listItem');
 
-  deleteButtons.forEach(deleteButton => {
-    deleteButton.addEventListener('click', e => {
-      const card = deleteButton.closest('.list__card');
-      const cardItemIndex = chores.indexOf(
-        card.childNodes[1].childNodes[3].innerText
-      );
 
-      card.remove();
-      chores.splice(cardItemIndex, 1);
-
-      localStorage.setItem('listItem', JSON.stringify(chores));
-    });
-  });
-
-  deleteFinishedCard(deleteFinishedButtons);
+  deleteCard(deleteFinishedButtons, finished, 'finishedItem');
 }
 
-function deleteFinishedCard(buttons) {
+function deleteCard(buttons, array, item) {
   buttons.forEach(button => {
     button.addEventListener('click', e => {
       const card = button.closest('.list__card');
-      const cardItemIndex = finished.indexOf(
+      const cardItemIndex = array.indexOf(
         card.childNodes[1].childNodes[3].innerText
       );
-
-      card.remove();
-
-      deleteStoredItem(finished, cardItemIndex, 'finishedItem');
+      deleteElement(card);
+      deleteStoredItem(array, cardItemIndex, item);
     });
   });
 }
