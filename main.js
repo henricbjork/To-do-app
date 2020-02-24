@@ -87,16 +87,13 @@ inputForm.addEventListener('submit', function(event) {
     window.alert('Gotta write something my man');
   } else {
     event.preventDefault();
-    chores.push(userInput.value);
-    userInput.value = '';
     userPrompt.innerHTML = '';
-    localStorage.setItem('listItem', JSON.stringify(chores));
-    const items = JSON.parse(localStorage.getItem('listItem'));
+    insertNewItem(userInput, chores, 'listItem');
 
     list.innerHTML += `<div class="list__card">
     <div class="card__container">
     <button class="btn btn-done">Done</button> 
-    <li class="card__item">${items.pop()}</li>
+    <li class="card__item">${getStoredItems('listItem').pop()}</li>
     </div>
     <div class="item__buttons">
     <button class="btn btn-edit">Edit</button>

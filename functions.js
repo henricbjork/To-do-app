@@ -1,4 +1,19 @@
 'use strict';
+
+function insertNewItem(input, array, item) {
+  array.push(input.value);
+  input.value = '';
+  localStorage.setItem(item, JSON.stringify(array));
+}
+
+function getStoredItems(item) {
+  const items = JSON.parse(localStorage.getItem(item));
+  return items;
+}
+function deleteStoredItem(array, index, item) {
+  array.splice(index, 1);
+  localStorage.setItem(item, JSON.stringify(array));
+}
 /**
  * Adds functionality to the delete buttons.
  * Selects all deletebuttons and gets parent div for each button
@@ -27,10 +42,10 @@ function deleteButtonHandler() {
     });
   });
 
-  deleteFinishedItem(deleteFinishedButtons);
+  deleteFinishedCard(deleteFinishedButtons);
 }
 
-function deleteFinishedItem(buttons) {
+function deleteFinishedCard(buttons) {
   buttons.forEach(button => {
     button.addEventListener('click', e => {
       const card = button.closest('.list__card');
@@ -39,9 +54,8 @@ function deleteFinishedItem(buttons) {
       );
 
       card.remove();
-      finished.splice(cardItemIndex, 1);
 
-      localStorage.setItem('finishedItem', JSON.stringify(finished));
+      deleteStoredItem(finished, cardItemIndex, 'finishedItem');
     });
   });
 }
@@ -155,5 +169,5 @@ function doneButtonHandler() {
 
 function regretButtonHandler() {
   const regretButtons = document.querySelectorAll('.btn-regret');
-  deleteFinishedItem(regretButtons);
+  deleteFinishedCard(regretButtons);
 }
