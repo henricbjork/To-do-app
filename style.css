@@ -31,6 +31,9 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+.card__container {
+  display: flex;
+}
 .card__item {
   list-style: none;
 }
