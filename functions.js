@@ -141,7 +141,7 @@ function doneButtonHandler() {
       </div>
       </div>`;
 
-      // finishedList.appendChild(list.childNodes[1]);
+      deleteButtonHandler();
     });
   });
 }
