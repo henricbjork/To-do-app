@@ -7,9 +7,11 @@
  * then sets the new modified array to the local storage.
  *
  */
-
 function deleteButtonHandler() {
   const deleteButtons = document.querySelectorAll('.btn-delete');
+  const deleteFinishedButtons = document.querySelectorAll(
+    '.btn-delete_finished'
+  );
 
   deleteButtons.forEach(deleteButton => {
     deleteButton.addEventListener('click', e => {
@@ -22,11 +24,24 @@ function deleteButtonHandler() {
       localStorage.setItem('listItem', JSON.stringify(chores));
     });
   });
+
+  deleteFinishedButtons.forEach(deleteFinishedButton => {
+    deleteFinishedButton.addEventListener('click', e => {
+      const card = deleteFinishedButton.closest('.list__card');
+      const cardItemIndex = finished.indexOf(card.childNodes[1].innerText);
+
+      card.remove();
+      finished.splice(cardItemIndex, 1);
+
+      localStorage.setItem('finishedItem', JSON.stringify(finished));
+    });
+  });
 }
 
 function editButtonHandler() {
   const deleteButtons = document.querySelectorAll('.btn-delete');
   const editButtons = document.querySelectorAll('.btn-edit');
+  const doneButtons = document.querySelectorAll('.btn-done');
 
   editButtons.forEach(editButton => {
     editButton.addEventListener('click', e => {
@@ -37,9 +52,12 @@ function editButtonHandler() {
       deleteButtons.forEach(deleteButton => {
         deleteButton.disabled = true;
       });
+      doneButtons.forEach(doneButton => {
+        doneButton.disabled = true;
+      });
 
       const card = editButton.closest('.list__card');
-      const cardItem = card.childNodes[1];
+      const cardItem = card.childNodes[1].childNodes[3];
       const cardItemText = cardItem.innerText;
 
       comparer.push(cardItemText);
@@ -66,7 +84,7 @@ function editButtonHandler() {
             window.alert('Gotta write something my man');
           } else {
             const editedValue = editField.value;
-            card.replaceChild(cardItem, editField);
+            card.childNodes[1].replaceChild(cardItem, editField);
             cardItem.innerHTML = editedValue;
             confirmButton.parentNode.replaceChild(editButton, confirmButton);
             chores.splice(cardItemIndex, 1, editedValue);
@@ -82,9 +100,48 @@ function editButtonHandler() {
             deleteButtons.forEach(deleteButton => {
               deleteButton.disabled = false;
             });
+            doneButtons.forEach(doneButton => {
+              doneButton.disabled = false;
+            });
           }
         });
       });
+    });
+  });
+}
+
+function doneButtonHandler() {
+  const doneButtons = document.querySelectorAll('.btn-done');
+
+  doneButtons.forEach(doneButton => {
+    doneButton.addEventListener('click', e => {
+      const card = doneButton.parentNode.closest('.list__card');
+
+      const cardItem = card.childNodes[1].childNodes[3].innerText;
+
+      const cardItemIndex = chores.indexOf(cardItem);
+
+      finished.push(cardItem);
+      localStorage.setItem('finishedItem', JSON.stringify(finished));
+
+      card.remove();
+      chores.splice(cardItemIndex, 1);
+      localStorage.setItem('listItem', JSON.stringify(chores));
+
+      const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
+
+      finishedList.innerHTML += `<div class="list__card">
+      <div class="card__container">
+      <button class="btn btn-done">Done</button>
+      <li class="card__item">${finishedItems.pop()}</li>
+      </div>
+      <div class="item__buttons">
+      <button class="btn btn-edit">Edit</button>
+      <button class="btn btn-delete_finished">Delete</button>
+      </div>
+      </div>`;
+
+      deleteButtonHandler();
     });
   });
 }

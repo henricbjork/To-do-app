@@ -13,6 +13,12 @@ const template = `
     <ul class="list">
     </ul>
     </main>
+    <section class="completed">
+    <h1>completed</h1>
+    <p class="finished_prompt"></p>
+    <ul class="finished_list">
+    </ul>
+    </section>
 `;
 document.body.innerHTML = template;
 
@@ -22,10 +28,14 @@ const userPrompt = document.querySelector('.user_prompt');
 const list = document.querySelector('.list');
 const inputForm = document.querySelector('.input_form');
 const listCards = document.querySelectorAll('.list__card');
+const finishedList = document.querySelector('.finished_list');
 const items = JSON.parse(localStorage.getItem('listItem'));
+const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
+const finishedPrompt = document.querySelector('.finished_prompt');
 
 let chores = [];
 let comparer = [];
+let finished = [];
 
 if (items === null || Object.entries(items).length === 0) {
   userPrompt.innerHTML = 'Add your first chore!';
@@ -34,7 +44,10 @@ if (items === null || Object.entries(items).length === 0) {
   chores = JSON.parse(localStorage.getItem('listItem'));
   items.forEach(item => {
     list.innerHTML += `<div class="list__card">
+    <div class="card__container">
+    <button class="btn btn-done">Done</button> 
     <li class="card__item">${item}</li>
+    </div>
     <div class="item__buttons">
     <button class="btn btn-edit">Edit</button>
     <button class="btn btn-delete">Delete</button>
@@ -45,6 +58,28 @@ if (items === null || Object.entries(items).length === 0) {
   // Add functionality to the generated delete buttons (functions.js)
   deleteButtonHandler();
   editButtonHandler();
+  doneButtonHandler();
+}
+
+if (finishedItems === null || Object.entries(finishedItems).length === 0) {
+  finishedPrompt.innerHTML = 'Nothing finished';
+} else {
+  localStorage.setItem('finishedItem', JSON.stringify(finishedItems));
+  finished = JSON.parse(localStorage.getItem('finishedItem'));
+  finishedItems.forEach(finishedItem => {
+    finishedList.innerHTML += `<div class="list__card">
+    <div class="card__container">
+    <button class="btn btn-done">Done</button> 
+    <li class="card__item">${finishedItem}</li>
+    </div>
+    <div class="item__buttons">
+    <button class="btn btn-edit">Edit</button>
+    <button class="btn btn-delete_finished">Delete</button>
+    </div>
+    </div>`;
+  });
+
+  deleteButtonHandler();
 }
 
 inputForm.addEventListener('submit', function(event) {
@@ -59,7 +94,10 @@ inputForm.addEventListener('submit', function(event) {
     const items = JSON.parse(localStorage.getItem('listItem'));
 
     list.innerHTML += `<div class="list__card">
+    <div class="card__container">
+    <button class="btn btn-done">Done</button> 
     <li class="card__item">${items.pop()}</li>
+    </div>
     <div class="item__buttons">
     <button class="btn btn-edit">Edit</button>
     <button class="btn btn-delete">Delete</button>
@@ -69,5 +107,6 @@ inputForm.addEventListener('submit', function(event) {
     // Add functionality to the generated delete buttons (functions.js)
     deleteButtonHandler();
     editButtonHandler();
+    doneButtonHandler();
   }
 });
