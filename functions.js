@@ -16,7 +16,9 @@ function deleteButtonHandler() {
   deleteButtons.forEach(deleteButton => {
     deleteButton.addEventListener('click', e => {
       const card = deleteButton.closest('.list__card');
-      const cardItemIndex = chores.indexOf(card.childNodes[1].innerText);
+      const cardItemIndex = chores.indexOf(
+        card.childNodes[1].childNodes[3].innerText
+      );
 
       card.remove();
       chores.splice(cardItemIndex, 1);
@@ -25,10 +27,16 @@ function deleteButtonHandler() {
     });
   });
 
-  deleteFinishedButtons.forEach(deleteFinishedButton => {
-    deleteFinishedButton.addEventListener('click', e => {
-      const card = deleteFinishedButton.closest('.list__card');
-      const cardItemIndex = finished.indexOf(card.childNodes[1].innerText);
+  deleteFinishedItem(deleteFinishedButtons);
+}
+
+function deleteFinishedItem(buttons) {
+  buttons.forEach(button => {
+    button.addEventListener('click', e => {
+      const card = button.closest('.list__card');
+      const cardItemIndex = finished.indexOf(
+        card.childNodes[1].childNodes[3].innerText
+      );
 
       card.remove();
       finished.splice(cardItemIndex, 1);
@@ -132,11 +140,10 @@ function doneButtonHandler() {
 
       finishedList.innerHTML += `<div class="list__card">
       <div class="card__container">
-      <button class="btn btn-done">Done</button>
+      <button class="btn btn-regret">Regret</button>
       <li class="card__item">${finishedItems.pop()}</li>
       </div>
       <div class="item__buttons">
-      <button class="btn btn-edit">Edit</button>
       <button class="btn btn-delete_finished">Delete</button>
       </div>
       </div>`;
@@ -144,4 +151,9 @@ function doneButtonHandler() {
       deleteButtonHandler();
     });
   });
+}
+
+function regretButtonHandler() {
+  const regretButtons = document.querySelectorAll('.btn-regret');
+  deleteFinishedItem(regretButtons);
 }

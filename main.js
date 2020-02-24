@@ -69,17 +69,17 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
   finishedItems.forEach(finishedItem => {
     finishedList.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-done">Done</button> 
+    <button class="btn btn-regret">Regret</button> 
     <li class="card__item">${finishedItem}</li>
     </div>
     <div class="item__buttons">
-    <button class="btn btn-edit">Edit</button>
     <button class="btn btn-delete_finished">Delete</button>
     </div>
     </div>`;
   });
 
   deleteButtonHandler();
+  regretButtonHandler();
 }
 
 inputForm.addEventListener('submit', function(event) {
