@@ -32,6 +32,7 @@ const finishedList = document.querySelector('.finished_list');
 const items = JSON.parse(localStorage.getItem('listItem'));
 const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
 const finishedPrompt = document.querySelector('.finished_prompt');
+let deleteButtons;
 
 let chores = [];
 let comparer = [];
@@ -55,10 +56,20 @@ if (items === null || Object.entries(items).length === 0) {
     </div>`;
   });
 
-  // Add functionality to the generated delete buttons (functions.js)
-  deleteButtonHandler();
-  editButtonHandler();
+  const deleteButtons = document.querySelectorAll('.btn-delete');
+
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener('click', e => {
+      const card = deleteButton.closest('.list__card');
+      const cardText = card.childNodes[1].childNodes[3].innerText;
+
+      deleteElement(card);
+      deleteStoredItem(chores, cardText, 'listItem');
+    });
+  });
+
   doneButtonHandler();
+  editButtonHandler();
 }
 
 if (finishedItems === null || Object.entries(finishedItems).length === 0) {
@@ -69,17 +80,26 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
   finishedItems.forEach(finishedItem => {
     finishedList.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-done">Done</button> 
+    <button class="btn btn-regret">Regret</button> 
     <li class="card__item">${finishedItem}</li>
     </div>
     <div class="item__buttons">
-    <button class="btn btn-edit">Edit</button>
     <button class="btn btn-delete_finished">Delete</button>
     </div>
     </div>`;
   });
 
-  deleteButtonHandler();
+  const deleteButtons = document.querySelectorAll('.btn-delete_finished');
+
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener('click', e => {
+      const card = deleteButton.closest('.list__card');
+      const cardText = card.childNodes[1].childNodes[3].innerText;
+
+      deleteElement(card);
+      deleteStoredItem(finished, cardText, 'finishedItem');
+    });
+  });
 }
 
 inputForm.addEventListener('submit', function(event) {
@@ -87,16 +107,13 @@ inputForm.addEventListener('submit', function(event) {
     window.alert('Gotta write something my man');
   } else {
     event.preventDefault();
-    chores.push(userInput.value);
-    userInput.value = '';
     userPrompt.innerHTML = '';
-    localStorage.setItem('listItem', JSON.stringify(chores));
-    const items = JSON.parse(localStorage.getItem('listItem'));
+    insertNewItem(userInput, chores, 'listItem');
 
     list.innerHTML += `<div class="list__card">
     <div class="card__container">
     <button class="btn btn-done">Done</button> 
-    <li class="card__item">${items.pop()}</li>
+    <li class="card__item">${getStoredItems('listItem').pop()}</li>
     </div>
     <div class="item__buttons">
     <button class="btn btn-edit">Edit</button>
@@ -104,8 +121,18 @@ inputForm.addEventListener('submit', function(event) {
     </div>
     </div>`;
 
-    // Add functionality to the generated delete buttons (functions.js)
-    deleteButtonHandler();
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+
+    deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener('click', e => {
+        const card = deleteButton.closest('.list__card');
+        const cardText = card.childNodes[1].childNodes[3].innerText;
+
+        deleteElement(card);
+        deleteStoredItem(chores, cardText, 'listItem');
+      });
+    });
+
     editButtonHandler();
     doneButtonHandler();
   }

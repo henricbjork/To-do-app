@@ -1,41 +1,29 @@
 'use strict';
-/**
- * Adds functionality to the delete buttons.
- * Selects all deletebuttons and gets parent div for each button
- * Then gets the index of the card item in each div
- * then removes the div and removes the item from the chores array based on the fetched index
- * then sets the new modified array to the local storage.
- *
- */
-function deleteButtonHandler() {
-  const deleteButtons = document.querySelectorAll('.btn-delete');
-  const deleteFinishedButtons = document.querySelectorAll(
-    '.btn-delete_finished'
-  );
 
-  deleteButtons.forEach(deleteButton => {
-    deleteButton.addEventListener('click', e => {
-      const card = deleteButton.closest('.list__card');
-      const cardItemIndex = chores.indexOf(card.childNodes[1].innerText);
+function insertNewItem(input, array, item) {
+  array.push(input.value);
+  input.value = '';
+  localStorage.setItem(item, JSON.stringify(array));
+}
 
-      card.remove();
-      chores.splice(cardItemIndex, 1);
+function getStoredItems(item) {
+  const items = JSON.parse(localStorage.getItem(item));
+  return items;
+}
 
-      localStorage.setItem('listItem', JSON.stringify(chores));
-    });
-  });
+function deleteStoredItem(array, text, item) {
+  const index = array.indexOf(text);
+  array.splice(index, 1);
+  localStorage.setItem(item, JSON.stringify(array));
+}
 
-  deleteFinishedButtons.forEach(deleteFinishedButton => {
-    deleteFinishedButton.addEventListener('click', e => {
-      const card = deleteFinishedButton.closest('.list__card');
-      const cardItemIndex = finished.indexOf(card.childNodes[1].innerText);
+function deleteElement(element) {
+  element.remove();
+}
 
-      card.remove();
-      finished.splice(cardItemIndex, 1);
-
-      localStorage.setItem('finishedItem', JSON.stringify(finished));
-    });
-  });
+function deleteCard(text, array, item) {
+  const cardItemIndex = array.indexOf(text);
+  deleteStoredItem(array, cardItemIndex, item);
 }
 
 function editButtonHandler() {
@@ -132,16 +120,25 @@ function doneButtonHandler() {
 
       finishedList.innerHTML += `<div class="list__card">
       <div class="card__container">
-      <button class="btn btn-done">Done</button>
+      <button class="btn btn-regret">Regret</button>
       <li class="card__item">${finishedItems.pop()}</li>
       </div>
       <div class="item__buttons">
-      <button class="btn btn-edit">Edit</button>
       <button class="btn btn-delete_finished">Delete</button>
       </div>
       </div>`;
 
-      deleteButtonHandler();
+      const deleteButtons = document.querySelectorAll('.btn-delete_finished');
+
+      deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', e => {
+          const card = deleteButton.closest('.list__card');
+          const cardText = card.childNodes[1].childNodes[3].innerText;
+
+          deleteElement(card);
+          deleteStoredItem(finished, cardText, 'finishedItem');
+        });
+      });
     });
   });
 }
