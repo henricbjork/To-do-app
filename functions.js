@@ -1,9 +1,19 @@
 'use strict';
 
+function displayErrorMessage() {
+  window.alert(errors[0]);
+  errors = [];
+}
+
 function insertNewItem(input, array, item) {
-  array.push(input.value);
-  input.value = '';
-  localStorage.setItem(item, JSON.stringify(array));
+  if (typeof input === 'object') {
+    array.push(input.value);
+    input.value = '';
+    localStorage.setItem(item, JSON.stringify(array));
+  } else if (typeof input === 'string') {
+    array.push(input);
+    localStorage.setItem(item, JSON.stringify(array));
+  }
 }
 
 function getStoredItems(item) {
@@ -12,8 +22,12 @@ function getStoredItems(item) {
 }
 
 function deleteStoredItem(array, text, item) {
-  const index = array.indexOf(text);
-  array.splice(index, 1);
+  array.splice(array.indexOf(text), 1);
+  localStorage.setItem(item, JSON.stringify(array));
+}
+
+function replaceStoredItem(array, text, newText, item) {
+  array.splice(array.indexOf(text), 1, newText);
   localStorage.setItem(item, JSON.stringify(array));
 }
 
@@ -26,6 +40,20 @@ function deleteCard(text, array, item) {
   deleteStoredItem(array, cardItemIndex, item);
 }
 
+function disableButtons(buttons) {
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+}
+function enableButtons(buttons) {
+  buttons.forEach(button => {
+    button.disabled = false;
+  });
+}
+function addClass(element, className) {
+  element.classList.add(className);
+}
+
 function editButtonHandler() {
   const deleteButtons = document.querySelectorAll('.btn-delete');
   const editButtons = document.querySelectorAll('.btn-edit');
@@ -34,63 +62,52 @@ function editButtonHandler() {
   editButtons.forEach(editButton => {
     editButton.addEventListener('click', e => {
       //disables the rest of the buttons during edit mode
-      editButtons.forEach(editButton => {
-        editButton.disabled = true;
-      });
-      deleteButtons.forEach(deleteButton => {
-        deleteButton.disabled = true;
-      });
-      doneButtons.forEach(doneButton => {
-        doneButton.disabled = true;
-      });
+      disableButtons(deleteButtons);
+      disableButtons(editButtons);
+      disableButtons(doneButtons);
 
       const card = editButton.closest('.list__card');
       const cardItem = card.childNodes[1].childNodes[3];
       const cardItemText = cardItem.innerText;
 
-      comparer.push(cardItemText);
+      insertNewItem(cardItemText, comparer, 'comparerItem');
 
-      localStorage.setItem('comparerItem', JSON.stringify(comparer));
-      comparer = JSON.parse(localStorage.getItem('comparerItem'));
+      comparer = getStoredItems('comparerItem');
+
       const comparerItem = comparer[0];
-      const cardItemIndex = chores.indexOf(comparerItem);
 
       const editField = document.createElement('input');
-      editField.classList.add('input');
+      addClass(editField, 'input');
 
       const confirmButton = document.createElement('button');
+      addClass(confirmButton, 'btn-confirm');
       confirmButton.innerText = 'Confirm';
-      confirmButton.classList.add('btn-confirm');
 
       editButton.parentNode.replaceChild(confirmButton, editButton);
       cardItem.parentNode.replaceChild(editField, cardItem);
+
       const confirmButtons = document.querySelectorAll('.btn-confirm');
 
       confirmButtons.forEach(confirmButton => {
         confirmButton.addEventListener('click', e => {
           if (editField.value.trim() === '') {
-            window.alert('Gotta write something my man');
+            errors.push(`This field can't be left empty`);
+            displayErrorMessage();
           } else {
-            const editedValue = editField.value;
+            const newValue = editField.value;
             card.childNodes[1].replaceChild(cardItem, editField);
-            cardItem.innerHTML = editedValue;
+            cardItem.innerHTML = newValue;
             confirmButton.parentNode.replaceChild(editButton, confirmButton);
-            chores.splice(cardItemIndex, 1, editedValue);
-            localStorage.setItem('listItem', JSON.stringify(chores));
+
+            replaceStoredItem(chores, comparerItem, newValue, 'listItem');
             localStorage.removeItem('comparerItem');
 
             comparer = [];
 
             //enables the rest of the buttons after edit mode
-            editButtons.forEach(editButton => {
-              editButton.disabled = false;
-            });
-            deleteButtons.forEach(deleteButton => {
-              deleteButton.disabled = false;
-            });
-            doneButtons.forEach(doneButton => {
-              doneButton.disabled = false;
-            });
+            enableButtons(deleteButtons);
+            enableButtons(editButtons);
+            enableButtons(doneButtons);
           }
         });
       });
@@ -103,20 +120,19 @@ function doneButtonHandler() {
 
   doneButtons.forEach(doneButton => {
     doneButton.addEventListener('click', e => {
+      finishedPrompt.innerHTML = '';
+
       const card = doneButton.parentNode.closest('.list__card');
 
-      const cardItem = card.childNodes[1].childNodes[3].innerText;
+      const cardItemText = card.childNodes[1].childNodes[3].innerText;
 
-      const cardItemIndex = chores.indexOf(cardItem);
+      insertNewItem(cardItemText, finished, 'finishedItem');
 
-      finished.push(cardItem);
-      localStorage.setItem('finishedItem', JSON.stringify(finished));
+      deleteElement(card);
 
-      card.remove();
-      chores.splice(cardItemIndex, 1);
-      localStorage.setItem('listItem', JSON.stringify(chores));
+      deleteStoredItem(chores, cardItemText, 'listItem');
 
-      const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
+      const finishedItems = getStoredItems('finishedItem');
 
       finishedList.innerHTML += `<div class="list__card">
       <div class="card__container">

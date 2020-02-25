@@ -6,7 +6,7 @@ const template = `
 </div>
     <form class="input_form">
     <label for="input_form__input">Input todo</label>
-        <input type="text "name="input_form__input" id="input_form__input" class="input input_form__input"  required>
+        <input type="text "name="input_form__input" id="input_form__input" class="input input_form__input" required>
         <button type="submit" class="btn input_form__button">Submit</button>
     </form>
     <p class="user_prompt"></p>
@@ -32,11 +32,11 @@ const finishedList = document.querySelector('.finished_list');
 const items = JSON.parse(localStorage.getItem('listItem'));
 const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
 const finishedPrompt = document.querySelector('.finished_prompt');
-let deleteButtons;
 
 let chores = [];
 let comparer = [];
 let finished = [];
+let errors = [];
 
 if (items === null || Object.entries(items).length === 0) {
   userPrompt.innerHTML = 'Add your first chore!';
@@ -104,10 +104,13 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
 
 inputForm.addEventListener('submit', function(event) {
   if (userInput.value.trim() === '') {
-    window.alert('Gotta write something my man');
+    errors.push(`This field can't be left empty`);
+    displayErrorMessage();
   } else {
     event.preventDefault();
     userPrompt.innerHTML = '';
+    console.log(typeof userInput);
+
     insertNewItem(userInput, chores, 'listItem');
 
     list.innerHTML += `<div class="list__card">
