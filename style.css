@@ -33,18 +33,21 @@ main {
 }
 .card__container {
   display: flex;
+  align-items: center;
 }
 .card__item {
   list-style: none;
 }
 .btn {
-  border: 1px solid black;
+  border: none;
   padding: 5px;
   border-radius: 3px;
   background: #fff;
 }
 .btn-delete {
-  background: red;
+}
+.icon {
+  height: 20px;
 }
 .done {
   background: green;

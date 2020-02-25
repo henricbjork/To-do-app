@@ -134,11 +134,11 @@ function doneButtonHandler() {
 
       finishedList.innerHTML += `<div class="list__card">
       <div class="card__container">
-      <button class="btn btn-regret">Regret</button>
+      <button class="btn btn-regret"><img class="icon" src="/icons/success.svg"></button>
       <li class="card__item">${getStoredItems('finishedItem').pop()}</li>
       </div>
       <div class="item__buttons">
-      <button class="btn btn-delete_finished">Delete</button>
+      <button class="btn btn-delete_finished"><img class="icon" src="/icons/delete.svg"></button>
       </div>
       </div>`;
 
@@ -176,12 +176,12 @@ function regretButtonHandler(buttons) {
 
       list.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-done">Done</button> 
+    <button class="btn btn-done"><img class="icon" src="/icons/notdone.svg"></button> 
     <li class="card__item">${getStoredItems('listItem').pop()}</li>
     </div>
     <div class="item__buttons">
-    <button class="btn btn-edit">Edit</button>
-    <button class="btn btn-delete">Delete</button>
+    <button class="btn btn-edit"><img class="icon" src="/icons/edit.svg"></button>
+    <button class="btn btn-delete"><img class="icon" src="/icons/delete.svg"></button>
     </div>
     </div>`;
 
