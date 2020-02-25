@@ -90,6 +90,9 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
   });
 
   const deleteButtons = document.querySelectorAll('.btn-delete_finished');
+  const regretButtons = document.querySelectorAll('.btn-regret');
+
+  regretButtonHandler(regretButtons);
 
   deleteButtons.forEach(deleteButton => {
     deleteButton.addEventListener('click', e => {
