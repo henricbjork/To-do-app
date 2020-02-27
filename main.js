@@ -70,7 +70,6 @@ addButton.addEventListener('click', e => {
       displayErrorMessage();
     } else {
       event.preventDefault();
-      userPrompt.innerHTML = '';
       insertNewItem(taskInputField, chores, 'listItem');
       deleteElement(popup);
 
@@ -105,7 +104,6 @@ addButton.addEventListener('click', e => {
 
 if (items === null || Object.entries(items).length === 0) {
   console.log('Add new chore');
-  
 } else {
   localStorage.setItem('listItem', JSON.stringify(items));
   chores = JSON.parse(localStorage.getItem('listItem'));
