@@ -8,6 +8,7 @@ main {
   margin: 0 auto;
   border: 3px solid purple;
   height: 100vh;
+  overflow: scroll;
 }
 .header {
   display: flex;

@@ -82,6 +82,8 @@ addButton.addEventListener('click', e => {
 
       insertNewItem(inputt, chores, 'listItem');
 
+      deleteElement(popup);
+
       list.innerHTML += `<div class="list__card">
     <div class="card__container">
     <button class="btn btn-done"><img class="icon" src="/icons/notdone.svg"></button> 
@@ -102,7 +104,6 @@ addButton.addEventListener('click', e => {
 
           deleteElement(card);
           deleteStoredItem(chores, cardText, 'listItem');
-          test.removeChild(popup); // funkar ej atm
         });
       });
 
