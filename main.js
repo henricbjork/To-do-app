@@ -54,6 +54,7 @@ addButton.addEventListener('click', e => {
   addClass(inputForm, 'input_form');
   addClass(taskInputField, 'input_form__input');
   addClass(taskSubmitButton, 'input_form__button');
+  taskSubmitButton.innerText = 'Add';
 
   label.setAttribute('for', 'input_form__input');
   taskSubmitButton.setAttribute('type', 'submit');

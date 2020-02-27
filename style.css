@@ -102,3 +102,12 @@ input {
   margin: 0 auto;
   height: 100vh;
 }
+
+.input_form__button {
+  border: none;
+  padding: 5px;
+  border-radius: 3px;
+  height: 20px;
+  width: 50px;
+  background: #fff;
+}
