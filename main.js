@@ -13,7 +13,6 @@ const template = `
     <p>${weekDay}</p>
     </div>
 </div>
-    <p class="user_prompt"></p>
     <ul class="list">
     </ul>
     <section class="completed">
@@ -104,7 +103,8 @@ addButton.addEventListener('click', e => {
 });
 
 if (items === null || Object.entries(items).length === 0) {
-  userPrompt.innerHTML = 'Add your first chore!';
+  console.log('Add new chore');
+  
 } else {
   localStorage.setItem('listItem', JSON.stringify(items));
   chores = JSON.parse(localStorage.getItem('listItem'));

@@ -48,6 +48,10 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+li {
+  font-size: 22px;
+  margin-left: 20px;
+}
 .card__container {
   display: flex;
   align-items: center;
@@ -64,7 +68,7 @@ main {
 .btn-delete {
 }
 .icon {
-  height: 20px;
+  height: 30px;
 }
 .icon-add {
   height: 50px;
@@ -74,8 +78,10 @@ main {
   background: green;
 }
 input {
-  border: 1px solid black;
-  border-radius: 3px;
+  border-bottom: 1px solid black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 .btn-add {
   
@@ -85,11 +91,14 @@ input {
 
 }
 .popup {
+  position: fixed;
+  top: 0;
+  background: blue;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 100%;
   border: 3px solid green;
   margin: 0 auto;
-  height: 200px;
+  height: 100vh;
 }
