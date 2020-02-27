@@ -6,10 +6,20 @@
 }
 main {
   margin: 0 auto;
+  border: 3px solid purple;
+  height: 100vh;
 }
-.header__text {
-  text-align: center;
-  padding: 10px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.date {
+  display: flex;
+  align-items: center;
+}
+.date__day {
+  font-size: 50px;
 }
 .input_form {
   display: flex;
