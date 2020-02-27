@@ -54,6 +54,18 @@ function addClass(element, className) {
   element.classList.add(className);
 }
 
+function setAttributes(element, attributes) {
+  for (let key in attributes) {
+    element.setAttribute(key, attributes[key]);
+  }
+}
+
+function appendChildren(element, children) {
+  children.forEach(child => {
+    element.appendChild(child);
+  });
+}
+
 function editButtonHandler() {
   const deleteButtons = document.querySelectorAll('.btn-delete');
   const editButtons = document.querySelectorAll('.btn-edit');
@@ -80,8 +92,13 @@ function editButtonHandler() {
       addClass(editField, 'input');
 
       const confirmButton = document.createElement('button');
+      
       addClass(confirmButton, 'btn-confirm');
-      confirmButton.innerText = 'Confirm';
+
+      const confirmIcon = document.createElement('img');
+      confirmIcon.setAttribute('src', '/icons/confirm.svg');
+      addClass(confirmIcon, 'icon');
+      confirmButton.appendChild(confirmIcon);
 
       editButton.parentNode.replaceChild(confirmButton, editButton);
       cardItem.parentNode.replaceChild(editField, cardItem);
@@ -193,7 +210,7 @@ function regretButtonHandler(buttons) {
           const cardText = card.childNodes[1].childNodes[3].innerText;
 
           deleteElement(card);
-          deleteStoredItem(finished, cardText, 'finishedItem');
+          deleteStoredItem(chores, cardItemText, 'listItem');
         });
       });
 
@@ -202,6 +219,3 @@ function regretButtonHandler(buttons) {
     });
   });
 }
-
-
-

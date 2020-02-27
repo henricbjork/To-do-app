@@ -6,7 +6,6 @@
 }
 main {
   margin: 0 auto;
-  border: 3px solid purple;
   height: 100vh;
   overflow: scroll;
 }
@@ -14,6 +13,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 90%;
+  padding: 30px 30px 5px 30px;
+  margin: 0 auto;
 }
 .date {
   display: flex;
@@ -30,13 +32,17 @@ main {
 .user_prompt {
   text-align: center;
 }
-.list {
+.list,
+.finished_list {
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .list__card {
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 3px;
+  width: 90%;
+  padding: 15px;
   margin: 2px;
   display: flex;
   justify-content: space-between;
@@ -60,10 +66,30 @@ main {
 .icon {
   height: 20px;
 }
+.icon-add {
+  height: 50px;
+  
+}
 .done {
   background: green;
 }
-.input {
+input {
   border: 1px solid black;
   border-radius: 3px;
+}
+.btn-add {
+  
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+
+}
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  border: 3px solid green;
+  margin: 0 auto;
+  height: 200px;
 }
