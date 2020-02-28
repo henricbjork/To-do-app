@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 main {
   margin: 0 auto;
@@ -13,9 +13,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
-  padding: 30px 30px 5px 30px;
+  width: 100%;
   margin: 0 auto;
+  padding: 50px 30px 30px 30px;
 }
 .date {
   display: flex;
@@ -28,6 +28,7 @@ main {
   display: flex;
   justify-content: center;
   justify-content: space-evenly;
+  flex-direction: column;
 }
 .user_prompt {
   text-align: center;
@@ -72,7 +73,6 @@ li {
 }
 .icon-add {
   height: 50px;
-  
 }
 .done {
   background: green;
@@ -84,25 +84,31 @@ input {
   border-right: none;
 }
 .btn-add {
-  
   position: absolute;
   bottom: 30px;
   right: 30px;
-
 }
 .popup {
+  display: none;
+  opacity: 0;
   position: fixed;
-  top: 0;
-  background: blue;
-  display: flex;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  border: 3px solid green;
-  margin: 0 auto;
-  height: 100vh;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-
+.active {
+  display: flex;
+  opacity: 1;
+  transition: ease-in 1s;
+}
 .input_form__button {
   border: none;
   padding: 5px;

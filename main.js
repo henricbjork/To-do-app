@@ -23,6 +23,7 @@ const template = `
     <div class="addContainer">
     <button class="btn btn-add"><img class="icon icon-add" src="/icons/add.png"></button>
     </div>
+    <div class="popup"></div>
     </main>
 `;
 document.body.innerHTML = template;
@@ -37,6 +38,7 @@ const finishedList = document.querySelector('.finished_list');
 const items = JSON.parse(localStorage.getItem('listItem'));
 const finishedItems = JSON.parse(localStorage.getItem('finishedItem'));
 const finishedPrompt = document.querySelector('.finished_prompt');
+const popup = document.querySelector('.popup');
 
 let chores = [];
 let comparer = [];
@@ -44,23 +46,25 @@ let finished = [];
 let errors = [];
 
 addButton.addEventListener('click', e => {
-  const popup = document.createElement('div');
+  addButton.disabled = true;
   const inputForm = document.createElement('form');
   const label = document.createElement('label');
   const taskInputField = document.createElement('input');
   const taskSubmitButton = document.createElement('button');
+  const prompt = document.createElement('h1');
 
-  addClass(popup, 'popup');
+  addClass(popup, 'active');
   addClass(inputForm, 'input_form');
   addClass(taskInputField, 'input_form__input');
   addClass(taskSubmitButton, 'input_form__button');
   taskSubmitButton.innerText = 'Add';
+  prompt.innerText = 'Add new task: ';
 
   label.setAttribute('for', 'input_form__input');
   taskSubmitButton.setAttribute('type', 'submit');
   setAttributes(taskInputField, { type: 'text', name: 'input_for__input' });
 
-  appendChildren(inputForm, [label, taskInputField, taskSubmitButton]);
+  appendChildren(inputForm, [prompt, label, taskInputField, taskSubmitButton]);
   popup.appendChild(inputForm);
   addContainer.appendChild(popup);
 
@@ -72,14 +76,14 @@ addButton.addEventListener('click', e => {
       event.preventDefault();
       insertNewItem(taskInputField, chores, 'listItem');
       deleteElement(popup);
-
+      addButton.disabled = false;
       list.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-done"><img class="icon" src="/icons/notdone.svg"></button> 
+    <button class="btn btn-done"><img class="icon" src="/icons/notdone.png"></button> 
     <li class="card__item">${getStoredItems('listItem').pop()}</li>
     </div>
     <div class="item__buttons">
-    <button class="btn btn-edit"><img class="icon" src="/icons/edit.svg"></button>
+    <button class="btn btn-edit"><img class="icon" src="/icons/edit.png"></button>
     <button class="btn btn-delete"><img class="icon" src="/icons/delete.svg"></button>
     </div>
     </div>`;
@@ -110,11 +114,11 @@ if (items === null || Object.entries(items).length === 0) {
   items.forEach(item => {
     list.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-done"><img class="icon" src="/icons/notdone.svg"></button> 
+    <button class="btn btn-done"><img class="icon" src="/icons/notdone.png"></button> 
     <li class="card__item">${item}</li>
     </div>
     <div class="item__buttons">
-    <button class="btn btn-edit"><img class="icon" src="/icons/edit.svg"></button>
+    <button class="btn btn-edit"><img class="icon" src="/icons/edit.png"></button>
     <button class="btn btn-delete"><img class="icon" src="/icons/delete.svg"></button>
     </div>
     </div>`;
@@ -144,7 +148,7 @@ if (finishedItems === null || Object.entries(finishedItems).length === 0) {
   finishedItems.forEach(finishedItem => {
     finishedList.innerHTML += `<div class="list__card">
     <div class="card__container">
-    <button class="btn btn-regret"><img class="icon" src="/icons/success.svg"></button> 
+    <button class="btn btn-regret"><img class="icon" src="/icons/confirm.svg"></button> 
     <li class="card__item">${finishedItem}</li>
     </div>
     <div class="item__buttons">
