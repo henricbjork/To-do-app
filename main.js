@@ -76,6 +76,10 @@ addButton.addEventListener('click', e => {
       event.preventDefault();
       insertNewItem(taskInputField, chores, 'listItem');
       deleteElement(popup);
+      deleteElement(inputForm);
+      deleteElement(taskInputField);
+      deleteElement(taskSubmitButton);
+
       addButton.disabled = false;
       list.innerHTML += `<div class="list__card">
     <div class="card__container">
