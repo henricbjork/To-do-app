@@ -69,6 +69,13 @@ function appendChildren(element, children) {
   });
 }
 
+function deletePopup(div, form, input, button) {
+  deleteElement(div);
+  deleteElement(form);
+  deleteElement(input);
+  deleteElement(button);
+}
+
 function editButtonHandler() {
   const deleteButtons = document.querySelectorAll('.btn-delete');
   const editButtons = document.querySelectorAll('.btn-edit');
