@@ -1,7 +1,10 @@
 'use strict';
 
 function displayErrorMessage() {
-  window.alert(errors[0]);
+  errors.forEach(error => {
+    window.alert(error);
+  });
+
   errors = [];
 }
 
@@ -92,7 +95,7 @@ function editButtonHandler() {
       addClass(editField, 'input');
 
       const confirmButton = document.createElement('button');
-      
+
       addClass(confirmButton, 'btn-confirm');
 
       const confirmIcon = document.createElement('img');
