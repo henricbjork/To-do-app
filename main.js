@@ -47,26 +47,14 @@ let errors = [];
 
 addButton.addEventListener('click', e => {
   addButton.disabled = true;
+
   const inputForm = document.createElement('form');
   const label = document.createElement('label');
   const taskInputField = document.createElement('input');
   const taskSubmitButton = document.createElement('button');
   const prompt = document.createElement('h1');
 
-  addClass(popup, 'active');
-  addClass(inputForm, 'input_form');
-  addClass(taskInputField, 'input_form__input');
-  addClass(taskSubmitButton, 'input_form__button');
-  taskSubmitButton.innerText = 'Add';
-  prompt.innerText = 'Add new task: ';
-
-  label.setAttribute('for', 'input_form__input');
-  taskSubmitButton.setAttribute('type', 'submit');
-  setAttributes(taskInputField, { type: 'text', name: 'input_for__input' });
-
-  appendChildren(inputForm, [prompt, label, taskInputField, taskSubmitButton]);
-  popup.appendChild(inputForm);
-  addContainer.appendChild(popup);
+  createPopup(inputForm, label, taskInputField, taskSubmitButton, prompt);
 
   inputForm.addEventListener('submit', function(event) {
     if (taskInputField.value.trim() === '') {

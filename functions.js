@@ -69,6 +69,24 @@ function appendChildren(element, children) {
   });
 }
 
+function createPopup(form, label, input, button, prompt) {
+  addClass(popup, 'active');
+  addClass(form, 'input_form');
+  addClass(input, 'input_form__input');
+  addClass(button, 'input_form__button');
+
+  button.innerText = 'Add';
+  prompt.innerText = 'Add new task: ';
+
+  label.setAttribute('for', 'input_form__input');
+  button.setAttribute('type', 'submit');
+  setAttributes(input, { type: 'text', name: 'input_for__input' });
+
+  appendChildren(form, [prompt, label, input, button]);
+  popup.appendChild(form);
+  addContainer.appendChild(popup);
+}
+
 function deletePopup(div, form, input, button) {
   deleteElement(div);
   deleteElement(form);
