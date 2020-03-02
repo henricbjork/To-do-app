@@ -48,6 +48,13 @@ function disableButtons(buttons) {
     button.disabled = true;
   });
 }
+
+function enableButtons(buttons) {
+  buttons.forEach(button => {
+    button.disabled = false;
+  });
+}
+
 function enableButtons(buttons) {
   buttons.forEach(button => {
     button.disabled = false;
@@ -105,6 +112,7 @@ function editButtonHandler() {
       disableButtons(deleteButtons);
       disableButtons(editButtons);
       disableButtons(doneButtons);
+      // disableButtons(...deleteButtons, ...editButtons, ...doneButtons);
 
       const card = editButton.closest('.list__card');
       const cardItem = card.childNodes[1].childNodes[3];

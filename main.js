@@ -66,6 +66,7 @@ addButton.addEventListener('click', e => {
       deletePopup(popup, inputForm, taskInputField, taskSubmitButton);
 
       addButton.disabled = false;
+
       list.innerHTML += `<div class="list__card">
     <div class="card__container">
     <button class="btn btn-done"><img class="icon" src="/icons/notdone.png"></button> 
