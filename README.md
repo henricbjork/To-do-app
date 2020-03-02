@@ -2,6 +2,11 @@
 
 # To do list application
 
+## Preview
+
+<img width="350" alt="Screenshot 2020-03-02 at 18 45 55" src="https://user-images.githubusercontent.com/51784708/75703151-2ce1fd80-5cb7-11ea-8175-139a12e66c1f.png">
+
+
 ## Project goal
 - Familiarise myself with local storage
 - Improve my overall JavaScript skills
