@@ -54,6 +54,7 @@ addButton.addEventListener('click', e => {
   const taskSubmitButton = document.createElement('button');
   const prompt = document.createElement('h1');
 
+  //ändra till appendItems funktion?
   createPopup(inputForm, label, taskInputField, taskSubmitButton, prompt);
 
   inputForm.addEventListener('submit', function(event) {
