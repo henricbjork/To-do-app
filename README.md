@@ -10,7 +10,7 @@
 ## Project goal
 - Familiarise myself with local storage
 - Improve my overall JavaScript skills
-- Keep track of tasks (not really)
+- [Keep track of tasks](https://media.giphy.com/media/l0zAiJHyg0fMA/source.gif)
 
 ## User stories
 - As a user I should be able to add tasks to the list
